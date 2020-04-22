@@ -1,0 +1,82 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: Product
+          uri: http://localhost:8081
+          predicates:
+            - Path=/products/** 
+        - id: Reservation
+          uri: http://localhost:8082
+          predicates:
+            - Path=/reservations/** 
+        - id: Pay
+          uri: http://localhost:8083
+          predicates:
+            - Path=/payments/** 
+        - id: MaPage
+          uri: http://localhost:8084
+          predicates:
+            - Path= /myPages/**
+        - id: Notice
+          uri: http://localhost:8085
+          predicates:
+            - Path= 
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: Product
+          uri: http://Product:8080
+          predicates:
+            - Path=/products/** 
+        - id: Reservation
+          uri: http://Reservation:8080
+          predicates:
+            - Path=/reservations/** 
+        - id: Pay
+          uri: http://Pay:8080
+          predicates:
+            - Path=/payments/** 
+        - id: MaPage
+          uri: http://MaPage:8080
+          predicates:
+            - Path= /myPages/**
+        - id: Notice
+          uri: http://Notice:8080
+          predicates:
+            - Path= 
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
